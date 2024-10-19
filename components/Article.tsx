@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const Article = (props: Props) => {
+const Article = () => {
   return (
     <div className="w-56 h-56 rounded-3xl bg-slate-100 shadow-xl flex flex-col items-center">
       <div className="rounded-b-none w-full h-44 rounded-2xl relative overflow-hidden">
