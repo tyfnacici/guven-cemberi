@@ -2,25 +2,23 @@
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { X } from "lucide-react";
 
 interface SidebarProps {
   isOpen: boolean;
-  onClose: () => void; // Prop for closing the sidebar
+  onClose: () => void;
+  currentMenuItem: string;
+  menuItems: { name: string; path: string }[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  onClose,
+  currentMenuItem,
+  menuItems,
+}) => {
   const pathname = usePathname();
-  const sidebarRef = useRef<HTMLDivElement>(null); // Reference for the sidebar
-
-  const menuItems = [
-    { name: "Ana Sayfa", path: "/" },
-    { name: "Şifre Oluşturucu", path: "/sifre-olusturucu" },
-    { name: "Bilgilendirme Köşesi", path: "/bilgilendirme" },
-    { name: "Bilgi Toplama", path: "/bilgi-toplama" },
-    { name: "Website Güvenlik Taraması", path: "/website-guvenlik" },
-    { name: "Dosya Virüs Taraması", path: "/virus-tarama" },
-    { name: "Sızıntı taraması", path: "/sizinti-tarama" },
-  ];
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,11 +39,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
+  const filteredMenuItems = menuItems.filter(
+    (item) =>
+      !(
+        item.name === "Şifre Oluşturucu" &&
+        item.path !== "/sifre-olusturucu/ipuclari"
+      )
+  );
+
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-20 lg:hidden"
+          className="fixed inset-0 bg-black opacity-50 z-20"
           onClick={onClose}
         ></div>
       )}
@@ -53,13 +59,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         ref={sidebarRef}
         className={`${
           isOpen ? "translate-x-0" : "translate-x-full"
-        } fixed inset-y-0 right-0 z-30 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:w-auto`}
+        } fixed inset-0 z-30 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:w-auto`}
       >
-        <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Menu</h2>
+        <div className="p-4 h-full">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold w-64">{currentMenuItem}</h2>
+            <button
+              className="text-xl font-semibold lg:hidden"
+              onClick={onClose}
+            >
+              <X size={24} />
+            </button>
+          </div>
           <nav>
             <ul>
-              {menuItems.map((item) => (
+              {filteredMenuItems.map((item) => (
                 <li key={item.path} className="mb-2">
                   <Link href={item.path}>
                     <span
