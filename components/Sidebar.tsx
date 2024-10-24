@@ -7,16 +7,10 @@ import { X } from "lucide-react";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  currentMenuItem: string;
   menuItems: { name: string; path: string }[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
-  isOpen,
-  onClose,
-  currentMenuItem,
-  menuItems,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, menuItems }) => {
   const pathname = usePathname();
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +57,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <div className="p-4 h-full">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold w-64">{currentMenuItem}</h2>
             <button
               className="text-xl font-semibold lg:hidden"
               onClick={onClose}

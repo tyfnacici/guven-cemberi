@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -8,9 +7,7 @@ type Props = { buttonText: string };
 const Button = (props: Props) => {
   const pathName = usePathname();
   const router = useRouter();
-
   const lastSegment = pathName?.split("/").pop();
-
   const pathMap: { [key: string]: string } = {
     kontrol: "Kontrol",
     ipuclari: "İpuçları",
@@ -31,11 +28,18 @@ const Button = (props: Props) => {
   return (
     <button
       onClick={handleNavigation}
-      className={`w-full border-2 border-gray-300 text-gray-500 rounded-xl px-3 py-2 text-xl md:w-auto lg:px-6 lg:text-2xl ${
-        isSelected
-          ? "bg-gray-300 text-white"
-          : "hover:bg-gray-300 hover:text-black"
-      }`}
+      className={`
+        w-full h-fit 
+        border-2 rounded-xl px-4 py-2 
+        text-md md:w-auto lg:px-6 lg:text-xl
+        transition-all duration-300 ease-in-out
+        shadow-sm hover:shadow-md
+        ${
+          isSelected
+            ? "bg-blue-500 border-blue-600 text-white hover:bg-blue-600"
+            : "border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-blue-400 hover:text-blue-500"
+        }
+      `}
     >
       {props.buttonText}
     </button>

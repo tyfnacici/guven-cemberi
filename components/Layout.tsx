@@ -38,15 +38,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           currentMenuItem={currentMenuItem}
         />
         <main className="flex-1 flex items-center justify-center overflow-x-hidden bg-gray-100">
-          <div className="container mx-auto px-6 py-8 flex items-center justify-center h-screen w-screen">
-            {children}
+          <div className="container mx-auto px-6 py-8 flex items-center justify-center h-full w-full">
+            <div
+              className="relative bg-white rounded-lg flex justify-center pb-4 border-gray-400 shadow-md w-full mx-auto space-y-8 
+                      h-full
+                      overflow-y-auto hide-scrollbar border-2 my-10"
+            >
+              {children}
+            </div>
           </div>
         </main>
       </div>
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        currentMenuItem={currentMenuItem}
         menuItems={menuItems}
       />
     </div>
