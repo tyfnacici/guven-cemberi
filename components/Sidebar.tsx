@@ -74,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, menuItems }) => {
           <nav>
             <ul>
               {filteredMenuItems.map((item) => (
-                <li key={item.path} className="mb-2">
+                <li key={item.path} className="mb-2" onClick={onClose}>
                   <Link href={item.path}>
                     <span
                       className={`block p-2 rounded ${
