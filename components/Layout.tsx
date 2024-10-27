@@ -23,8 +23,23 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const currentMenuItem =
-    menuItems.find((item) => item.path === pathname)?.name || "Menu";
+
+  const getCurrentMenuName = () => {
+    if (pathname.includes("sifre-olusturucu")) {
+      const subPath = pathname.split("/").pop();
+      switch (subPath) {
+        case "ipuclari":
+          return "Şifre İpuçları";
+        case "olustur":
+          return "Şifre Oluştur";
+        case "kontrol":
+          return "Şifre Kontrol";
+        default:
+          return "Şifre Oluşturucu";
+      }
+    }
+    return menuItems.find((item) => item.path === pathname)?.name || "Menu";
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -35,7 +50,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header
           toggleSidebar={toggleSidebar}
-          currentMenuItem={currentMenuItem}
+          currentMenuItem={getCurrentMenuName()}
         />
         <main className="flex-1 flex items-center justify-center overflow-x-hidden bg-gray-100">
           <div className="container mx-auto px-6 py-8 flex items-center justify-center h-full w-full">

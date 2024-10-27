@@ -33,6 +33,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, menuItems }) => {
     };
   }, [isOpen, onClose]);
 
+  const isActiveLink = (itemPath: string) => {
+    if (itemPath.includes("sifre-olusturucu")) {
+      return pathname.includes("sifre-olusturucu");
+    }
+    return pathname === itemPath;
+  };
+
   const filteredMenuItems = menuItems.filter(
     (item) =>
       !(
@@ -71,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, menuItems }) => {
                   <Link href={item.path}>
                     <span
                       className={`block p-2 rounded ${
-                        pathname === item.path
+                        isActiveLink(item.path)
                           ? "bg-gray-200 text-gray-800"
                           : "text-gray-600 hover:bg-gray-100"
                       }`}

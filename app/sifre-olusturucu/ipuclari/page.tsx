@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import Button from "@/components/Button";
 
 const contentData = [
   {
@@ -76,11 +75,6 @@ const contentData = [
 const Home: NextPage = () => {
   return (
     <>
-      <div className="absolute w-full justify-center pb-5 top-5 gap-y-4 pt-4 lg:pt-0 flex flex-col lg:flex-row lg:gap-y-0 lg:gap-x-4 lg:px-0 backdrop-blur-md bg-white/40 shadow-lg border-b border-gray-200/50 z-10">
-        <Button buttonText="İpuçları" />
-        <Button buttonText="Kontrol" />
-        <Button buttonText="Oluştur" />
-      </div>
       <div className="flex flex-col px-6 gap-y-8 overflow-y-scroll hide-scrollbar">
         <h1 className="text-start font-bold text-3xl text-gray-800 mt-24 mb-2">
           Güvenli Şifre Oluşturma İpuçları
@@ -91,7 +85,7 @@ const Home: NextPage = () => {
             key={index}
             className="group hover:bg-gray-50 p-4 rounded-lg transition-all duration-300"
           >
-            <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 mb-3">
+            <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 mb-3">
               {section.title}:
             </h3>
             {section.content.map((paragraph, pIndex) => (

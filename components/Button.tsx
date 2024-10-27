@@ -36,8 +36,8 @@ const Button = (props: Props) => {
         shadow-sm hover:shadow-md
         ${
           isSelected
-            ? "bg-blue-500 border-blue-600 text-white hover:bg-blue-600"
-            : "border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-blue-400 hover:text-blue-500"
+            ? "bg-gray-500 border-gray-600 text-white hover:bg-gray-600"
+            : "border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 hover:text-gray-500"
         }
       `}
     >
