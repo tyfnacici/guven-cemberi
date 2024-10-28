@@ -60,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       overflow-y-auto hide-scrollbar border-2 my-10"
             >
               <div className="flex w-full h-full flex-col px-6 gap-y-8 overflow-y-scroll hide-scrollbar items-center">
-                <h1 className="self-start hidden lg:block font-bold text-3xl text-gray-800 mt-6 mb-2">
+                <h1 className="self-start hidden lg:block font-bold text-3xl text-gray-800 mt-6 mb-2 backdrop-blur-md bg-white/40 px-6 py-3 rounded-lg shadow-md z-10 border-b-2 border-slate-400">
                   {pathname === "/"
                     ? "Hoş geldin, Tayfun"
                     : !pathname.includes("sifre-olusturucu")
