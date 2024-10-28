@@ -1,10 +1,17 @@
+import Article from "@/components/Article";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">Bilgilendirme</h1>
-      <p className="text-center">Bilgilendirme</p>
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col gap-6">
+        <Article />
+        <Article />
+        <Article />
+        <Article />
+        <Article />
+        <Article />
+      </div>
     </div>
   );
 };

@@ -74,32 +74,30 @@ const contentData = [
 
 const Home: NextPage = () => {
   return (
-    <>
-      <div className="flex flex-col px-6 gap-y-8 overflow-y-scroll hide-scrollbar">
-        <h1 className="text-start font-bold text-3xl text-gray-800 mt-24 mb-2">
-          Güvenli Şifre Oluşturma İpuçları
-        </h1>
+    <div className="flex flex-col px-6 gap-y-8 overflow-y-scroll hide-scrollbar">
+      <h1 className="text-start font-bold text-3xl text-gray-800 mt-24 mb-2">
+        Güvenli Şifre Oluşturma İpuçları
+      </h1>
 
-        {contentData.map((section, index) => (
-          <div
-            key={index}
-            className="group hover:bg-gray-50 p-4 rounded-lg transition-all duration-300"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 mb-3">
-              {section.title}:
-            </h3>
-            {section.content.map((paragraph, pIndex) => (
-              <p
-                key={pIndex}
-                className="text-gray-600 leading-relaxed mb-2 group-hover:text-gray-700"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        ))}
-      </div>
-    </>
+      {contentData.map((section, index) => (
+        <div
+          key={index}
+          className="group hover:bg-gray-50 p-4 rounded-lg transition-all duration-300"
+        >
+          <h3 className="text-xl font-semibold text-gray-800 group-hover:text-gray-600 mb-3">
+            {section.title}:
+          </h3>
+          {section.content.map((paragraph, pIndex) => (
+            <p
+              key={pIndex}
+              className="text-gray-600 leading-relaxed mb-2 group-hover:text-gray-700"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 };
 

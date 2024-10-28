@@ -55,11 +55,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <main className="flex-1 flex items-center justify-center overflow-x-hidden bg-gray-100">
           <div className="container mx-auto px-6 py-8 flex items-center justify-center h-full w-full">
             <div
-              className="relative bg-white rounded-lg flex justify-center pb-4 border-gray-400 shadow-md w-full mx-auto space-y-8 
+              className="relative bg-white rounded-lg flex justify-center border-gray-400 shadow-md w-full mx-auto space-y-8 
                       h-full
                       overflow-y-auto hide-scrollbar border-2 my-10"
             >
-              {children}
+              <div className="flex w-full h-full flex-col px-6 gap-y-8 overflow-y-scroll hide-scrollbar items-center">
+                <h1 className="self-start hidden lg:block font-bold text-3xl text-gray-800 mt-6 mb-2">
+                  {pathname === "/"
+                    ? "Hoş geldin, Tayfun"
+                    : !pathname.includes("sifre-olusturucu")
+                    ? getCurrentMenuName()
+                    : ""}
+                </h1>
+                {children}
+              </div>
             </div>
           </div>
         </main>
