@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const UploadFile = (props: Props) => {
+const UploadFile = () => {
   return (
     <div className="flex w-full h-full justify-center">
       {/* File upload section */}
