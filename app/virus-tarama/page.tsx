@@ -1,11 +1,11 @@
+import UploadFile from "@/components/UploadFile";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">Virüs Tarama</h1>
-      <p className="">Virüs Tarama</p>
-    </>
+    <div className="flex flex-col items-center h-full w-full">
+      <UploadFile />
+    </div>
   );
 };
 
