@@ -2,12 +2,16 @@
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-type Props = { buttonText: string };
+type Props = {
+  buttonText: string;
+  onClick?: () => void;
+};
 
 const Button = (props: Props) => {
   const pathName = usePathname();
   const router = useRouter();
   const lastSegment = pathName?.split("/").pop();
+
   const pathMap: { [key: string]: string } = {
     kontrol: "Kontrol",
     ipuclari: "İpuçları",
@@ -17,6 +21,11 @@ const Button = (props: Props) => {
   const isSelected = pathMap[lastSegment || ""] === props.buttonText;
 
   const handleNavigation = () => {
+    if (props.onClick) {
+      props.onClick();
+      return;
+    }
+
     const targetPath = Object.keys(pathMap).find(
       (key) => pathMap[key] === props.buttonText
     );
@@ -29,8 +38,8 @@ const Button = (props: Props) => {
     <button
       onClick={handleNavigation}
       className={`
-        w-full h-fit 
-        border-2 rounded-xl px-4 py-2 
+        w-full h-fit
+        border-2 rounded-xl px-4 py-2
         text-md md:w-auto lg:px-6 lg:text-xl
         transition-all duration-300 ease-in-out
         shadow-sm hover:shadow-md
