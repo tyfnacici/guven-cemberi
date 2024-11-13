@@ -1,4 +1,4 @@
-// import Result from "@/components/Result";
+import Result from "@/components/Result";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
@@ -18,11 +18,14 @@ const Home: NextPage = () => {
       {/* Results */}
       <div className="flex w-full h-full mb-4 flex-col gap-y-4 rounded-xl border-gray-400 border-b-2 items-center justify-start shadow-md px-6 pb-6">
         <p className="pt-8 font-bold text-lg self-start pl-2">Sonuçlar</p>
-        {/* <Result />
-        <Result />
-        <Result />
-        <Result />
-        <Result /> */}
+        <Result result="Result 1" />
+        <Result result="Result 2" />
+        <Result result="Result 3" />
+        <Result result="Result 4" />
+        <Result result="Result 5" />
+        <Result result="Result 6" />
+        <Result result="Result 7" />
+        <Result result="Result 8" />
       </div>
     </div>
   );
