@@ -9,6 +9,7 @@ import re
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 import validators
+import email_validator
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -237,6 +238,27 @@ def parse_blackbird_output(output):
         "total_found": len(results)
     }
 
+def validate_email(email):
+    """Validate email format."""
+    try:
+        email_validator.validate_email(email)
+        return True
+    except email_validator.EmailNotValidError:
+        return False
+
+def validate_phone(phone):
+    """Validate phone number format."""
+    phone_pattern = re.compile(r'^\+?[1-9]\d{10,14}$')
+    return bool(phone_pattern.match(phone))
+
+def format_phone(phone):
+    """Format phone number to standard format."""
+    # Remove any whitespace and ensure it starts with '+'
+    phone = re.sub(r'\s+', '', phone)
+    if not phone.startswith('+'):
+        phone = '+' + phone
+    return phone
+
 @app.route('/search', methods=['POST'])
 def search():
     """
@@ -246,25 +268,24 @@ def search():
         data = request.get_json()
         if not data or 'search' not in data or 'type' not in data:
             return jsonify({
-                "error": "Both 'search' and 'type' are required in the request body.",
-                "example": {
-                    "search": "username or email",
-                    "type": "username or email"
-                }
+                "error": "Both 'search' and 'type' are required in the request body."
             }), 400
         
-        search_term = data['search']
+        search_term = data['search'].strip()
         search_type = data['type'].lower()
         
         if search_type not in ['username', 'email']:
             return jsonify({
                 "error": "Invalid search type. Must be either 'username' or 'email'."
             }), 400
-        
-        # Updated command with correct path to blackbird.py
-        cmd = f"python3 /home/ubuntu/blackbird/blackbird.py --{search_type} {search_term}"
+            
+        if search_type == 'email' and not validate_email(search_term):
+            return jsonify({
+                "error": "Invalid email format."
+            }), 400
         
         # Execute the Blackbird command
+        cmd = f"python3 /home/ubuntu/blackbird/blackbird.py --{search_type} {search_term}"
         process = subprocess.Popen(
             cmd,
             shell=True,
@@ -280,7 +301,6 @@ def search():
                 "details": error
             }), 500
         
-        # Parse the output and return JSON
         result = parse_blackbird_output(output)
         
         return jsonify({
@@ -294,7 +314,36 @@ def search():
             "error": "An error occurred while processing the request.",
             "details": str(e)
         }), 500
+
+@app.route('/phone', methods=['POST'])
+def check_phone():
+    """
+    Endpoint to check phone number information using phoneintel command.
+    """
+    try:
+        data = request.get_json()
+        if not data or 'number' not in data:
+            return jsonify({"error": "Phone number is required in the request body."}), 400
         
+        phone_number = format_phone(data['number'])
+        
+        if not validate_phone(phone_number):
+            return jsonify({"error": "Invalid phone number format. Use format: +905555555555"}), 400
+        
+        # Run the phoneintel command
+        cmd = f"phoneintel --info {phone_number}"
+        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, error = process.communicate()
+        
+        if process.returncode != 0:
+            return jsonify({"error": "Failed to execute phoneintel command.", "details": error.decode()}), 500
+        
+        result = parse_phone_intel_output(output.decode())
+        return jsonify(result)
+    
+    except Exception as e:
+        return jsonify({"error": "An error occurred while processing the request.", "details": str(e)}), 500
+       
 @app.route('/check', methods=['GET'])
 def check_website():
     """
@@ -333,32 +382,6 @@ def check_website():
 
     return jsonify(result)
 
-@app.route('/phone', methods=['POST'])
-def check_phone():
-    """
-    Endpoint to check phone number information using phoneintel command.
-    """
-    try:
-        data = request.get_json()
-        if not data or 'number' not in data:
-            return jsonify({"error": "Phone number is required in the request body."}), 400
-        
-        phone_number = data['number']
-        
-        # Run the phoneintel command
-        cmd = f"phoneintel --info {phone_number}"
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output, error = process.communicate()
-        
-        if process.returncode != 0:
-            return jsonify({"error": "Failed to execute phoneintel command.", "details": error.decode()}), 500
-        
-        # Parse the output and return JSON
-        result = parse_phone_intel_output(output.decode())
-        return jsonify(result)
-    
-    except Exception as e:
-        return jsonify({"error": "An error occurred while processing the request.", "details": str(e)}), 500
 
 if __name__ == '__main__':
     # Run the Flask app
