@@ -1,5 +1,4 @@
 "use client";
-import Result from "@/components/Result";
 import type { NextPage } from "next";
 import { useState } from "react";
 
@@ -51,7 +50,9 @@ const Home: NextPage = () => {
     ? [
         {
           label: "Found Headers",
-          value: Object.keys(results.security_headers.found_headers).join(", "),
+          value: Object?.keys(results?.security_headers.found_headers).join(
+            ", "
+          ),
         },
         {
           label: "Missing Headers",
@@ -101,12 +102,12 @@ const Home: NextPage = () => {
           Tarat
         </button>
       </form>
-      <div className="flex w-full h-full mb-4 flex-col gap-y-4 rounded-xl border-gray-400 border-b-2 items-center justify-start shadow-md px-6 pb-6">
+      <div className="flex w-full h-max mb-4 flex-col gap-y-4 rounded-xl border-gray-400 border-b-2 items-center justify-start shadow-md px-6 pb-6">
         <p className="pt-8 font-bold text-lg self-start pl-2">Sonuçlar</p>
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
         {resultItems.map((item, index) => (
-          <Result key={index} result={`${item.label}: ${item.value}`} />
+          <p key={index}>{`${item.label}: ${item.value}`}</p>
         ))}
       </div>
     </div>
