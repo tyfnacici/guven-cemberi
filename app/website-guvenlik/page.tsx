@@ -86,18 +86,18 @@ const Home: NextPage = () => {
     <div className="h-full w-full flex flex-col justify-start gap-y-4">
       <form
         onSubmit={handleSubmit}
-        className="flex w-full flex-col gap-y-4 py-5 h-40 border-gray-400 border-b-2 rounded-xl items-center justify-center shadow-md"
+        className="flex w-full flex-col gap-y-4 py-5 h-40 border-gray-400 border-b-2 rounded-xl items-center justify-center shadow-md px-4"
       >
         <input
           type="text"
-          className="text-2xl border-2 px-6 py-3 rounded-xl"
+          className="text-md border px-2 w-full py-1 rounded-xl"
           placeholder="URL giriniz."
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
         <button
           type="submit"
-          className="bg-gray-500 text-xl px-6 py-2 rounded-lg text-white hover:bg-gray-800 transition-all duration-300 ease-in-out"
+          className="bg-gray-500 w-full text-xl px-2 py-1 rounded-lg text-white hover:bg-gray-800 transition-all duration-300 ease-in-out disabled:bg-gray-300"
         >
           Tarat
         </button>
@@ -106,9 +106,13 @@ const Home: NextPage = () => {
         <p className="pt-8 font-bold text-lg self-start pl-2">Sonuçlar</p>
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {resultItems.map((item, index) => (
-          <p key={index}>{`${item.label}: ${item.value}`}</p>
-        ))}
+        {resultItems.length === 0 ? (
+          <p className="text-center text-gray-500">Henüz sonuç yok</p>
+        ) : (
+          resultItems.map((item, index) => (
+            <p key={index}>{`${item.label}: ${item.value}`}</p>
+          ))
+        )}
       </div>
     </div>
   );

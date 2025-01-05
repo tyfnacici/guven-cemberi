@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { Check, Copy, RefreshCw } from "lucide-react";
+import CryptoJS from "crypto-js";
+import ExportPasswordsButton from "./ExportPasswordsButton";
 
 interface PasswordOptions {
   length: number;
@@ -13,6 +15,22 @@ interface PasswordOptions {
   pronounceable: boolean;
   customExclusions: string;
 }
+
+type PasswordEntry = {
+  password: string;
+  description: string;
+};
+
+const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY || "deneme";
+
+const encryptPassword = (password: string): string => {
+  return CryptoJS.AES.encrypt(password, SECRET_KEY).toString();
+};
+
+const decryptPassword = (encryptedPassword: string): string => {
+  const bytes = CryptoJS.AES.decrypt(encryptedPassword, SECRET_KEY);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 const AdvancedPasswordGenerator: React.FC = () => {
   const [options, setOptions] = useState<PasswordOptions>({
@@ -31,6 +49,8 @@ const AdvancedPasswordGenerator: React.FC = () => {
   const [entropy, setEntropy] = useState<number>(0);
   const [copied, setCopied] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(true);
+  const [description, setDescription] = useState<string>("");
+  const [passwordList, setPasswordList] = useState<PasswordEntry[]>([]);
 
   const similarChars = "O0Il1";
   const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -49,31 +69,26 @@ const AdvancedPasswordGenerator: React.FC = () => {
     if (options.lowercase) chars += lowercaseChars;
     if (options.numbers) chars += numberChars;
     if (options.special) chars += specialChars;
-
     if (options.excludeSimilar) {
       similarChars.split("").forEach((char) => {
         chars = chars.replace(char, "");
       });
     }
-
     if (options.customExclusions) {
       options.customExclusions.split("").forEach((char) => {
         chars = chars.replace(char, "");
       });
     }
-
     if (chars.length === 0) return "";
 
     let password = "";
     const array = new Uint32Array(options.length);
     window.crypto.getRandomValues(array);
-
     for (let i = 0; i < options.length; i++) {
       password += chars[array[i] % chars.length];
     }
 
     if (options.pronounceable) {
-      // Simple pronounceable algorithm - alternate consonants and vowels
       const vowels = "aeiou";
       const consonants = "bcdfghjklmnpqrstvwxyz";
       let pronounceablePassword = "";
@@ -94,8 +109,30 @@ const AdvancedPasswordGenerator: React.FC = () => {
     setGeneratedPassword(newPassword);
     setEntropy(calculateEntropy(newPassword));
     setShowPassword(true);
-    // Auto-hide password after 30 seconds
+
     setTimeout(() => setShowPassword(false), 30000);
+  };
+
+  const savePassword = () => {
+    if (!generatedPassword || !description) return;
+
+    const encryptedPassword = encryptPassword(generatedPassword);
+
+    const newEntry: PasswordEntry = {
+      password: encryptedPassword,
+      description: description,
+    };
+
+    const storedPasswords = localStorage.getItem("passwordList");
+    const passwordList = storedPasswords ? JSON.parse(storedPasswords) : [];
+
+    passwordList.push(newEntry);
+
+    localStorage.setItem("passwordList", JSON.stringify(passwordList));
+
+    setPasswordList(passwordList);
+
+    setDescription("");
   };
 
   const copyToClipboard = async () => {
@@ -109,6 +146,12 @@ const AdvancedPasswordGenerator: React.FC = () => {
   };
 
   useEffect(() => {
+    const storedPasswords = localStorage.getItem("passwordList");
+    if (storedPasswords) {
+      const passwordList = JSON.parse(storedPasswords);
+      setPasswordList(passwordList);
+    }
+
     handleGeneratePassword();
   }, []);
 
@@ -142,7 +185,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
             </button>
           </div>
         </div>
-
         <div className="mt-4">
           <div className="text-sm text-gray-600">Entropi: {entropy} bit</div>
           <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
@@ -160,12 +202,53 @@ const AdvancedPasswordGenerator: React.FC = () => {
             />
           </div>
         </div>
+        <div className="mt-4">
+          <input
+            type="text"
+            className="w-full px-4 py-3 text-lg border rounded-lg bg-gray-50"
+            placeholder="Parola Açıklaması (örn., 'Gmail hesap şifrem')"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <button
+            onClick={savePassword}
+            className="mt-2 w-full px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Parolayı Kaydet
+          </button>
+        </div>
+      </section>
+
+      {/* Saved Passwords Section */}
+      <section className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <h2 className="text-xl font-semibold mb-6">Kayıtlı Parolalar</h2>
+        {passwordList.length === 0 ? (
+          <p className="text-gray-600">Kayıtlı Parola Yok.</p>
+        ) : (
+          <ul className="space-y-4">
+            {passwordList.map((entry, index) => (
+              <li key={index} className="p-4 bg-gray-50 rounded-lg">
+                <div className="text-sm text-gray-600">
+                  <strong>Açıklama:</strong> {entry.description}
+                </div>
+                <div className="text-sm text-gray-600">
+                  <strong>Şifre:</strong> {decryptPassword(entry.password)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        {passwordList.length > 0 && (
+          <ExportPasswordsButton
+            passwordList={passwordList}
+            secretKey={SECRET_KEY}
+          />
+        )}
       </section>
 
       {/* Options Section */}
       <section className="bg-white rounded-lg shadow-md p-4 md:p-6">
         <h2 className="text-xl font-semibold mb-6">Şifre Seçenekleri</h2>
-
         {/* Length Slider */}
         <div className="mb-8">
           <label className="block text-sm font-medium mb-2">
@@ -186,7 +269,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
             <span>128</span>
           </div>
         </div>
-
         {/* Character Types */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className="space-y-4">
@@ -201,7 +283,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
               />
               <span>Büyük Harfler (A-Z)</span>
             </label>
-
             <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
               <input
                 type="checkbox"
@@ -214,7 +295,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
               <span>Küçük Harfler (a-z)</span>
             </label>
           </div>
-
           <div className="space-y-4">
             <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
               <input
@@ -227,7 +307,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
               />
               <span>Sayılar (0-9)</span>
             </label>
-
             <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
               <input
                 type="checkbox"
@@ -241,7 +320,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
             </label>
           </div>
         </div>
-
         {/* Advanced Options */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4">
@@ -254,9 +332,8 @@ const AdvancedPasswordGenerator: React.FC = () => {
                 }
                 className="w-5 h-5 rounded"
               />
-              <span>Benzer Karakterleri Hariç Tut (O, 0, I, l)</span>
+              <span>Benzer Karakterleri Hariç Tut (O,0,I,l)</span>
             </label>
-
             <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
               <input
                 type="checkbox"
@@ -269,7 +346,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
               <span>Yaygın Kelimeleri Önle</span>
             </label>
           </div>
-
           <div className="space-y-4">
             <label className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
               <input
@@ -282,7 +358,6 @@ const AdvancedPasswordGenerator: React.FC = () => {
               />
               <span>Okunabilir Şifre Oluştur</span>
             </label>
-
             <div className="p-3 bg-gray-50 rounded-lg">
               <label className="block text-sm font-medium mb-2">
                 Hariç Tutulacak Karakterler
