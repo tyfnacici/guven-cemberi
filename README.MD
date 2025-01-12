@@ -1,5 +1,13 @@
 # Güven Çemberi (Circle of Trust)
 
+# Proje Videosu https://www.youtube.com/watch?v=7OTL2Mjah1k
+
+# Proje Sunumu https://docs.google.com/presentation/d/1tqpqM84IdU64_DmL8nrL2Jv9RdvbyPCxsMey9rD03ho/edit?usp=sharing
+
+# Proje Tezi https://docs.google.com/document/d/1effYaKRQ1Agthgu47bGZzezxNtj29p3XkNpVq1MqeHo/edit?usp=sharing
+
+# Proje Kodları https://github.com/tyfnacici/guven-cemberi
+
 ## Proje Tanımı
 
 - Siber güvenlik, günümüz dünyasında bireyler ve kurumlar için hayati önem taşımaktadır. Her geçen gün artan dijitalleşme, bireylerin ve kurumların kişisel ve kurumsal verilerini daha büyük tehditler altına sokmaktadır. Bununla birlikte, bireylerin kişisel verilerini korumak ve dijital güvenliklerini sağlamak için kullanabilecekleri araçlar genellikle kurumsal çözümlere kıyasla sınırlı ve karmaşıktır. Bu araştırma önerisi, bireylerin siber güvenlik ihtiyaçlarını karşılayacak, kullanımı kolay ve çok yönlü bir platform geliştirme fikrine dayanmaktadır.
