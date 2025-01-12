@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import Button from "@/guven-cemberi-web/components/Button";
 
 export default function RootLayout({
   children,
