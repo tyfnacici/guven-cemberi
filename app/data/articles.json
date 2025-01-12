@@ -1,0 +1,28 @@
+{
+  "articles": [
+    {
+      "title": "VPN nedir?",
+      "excerpt": "VPN (Sanal Özel Ağ) Nedir?",
+      "imageUrl": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*gH-eexqpzHFE_wRiBKQspA.png",
+      "mediumUrl": "https://medium.com/@tyfnacici/vpn-nedir-139d73f0a636"
+    },
+    {
+      "title": "Veritabanlarına giriş",
+      "excerpt": "Veritabanı nedir?",
+      "imageUrl": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Hy6TraZYhhj1ppjUqt_TiA.png",
+      "mediumUrl": "https://medium.com/@tyfnacici/veritabanlar%C4%B1na-giri%C5%9F-42aaccd1a7a4"
+    },
+    {
+      "title": "Neden 2023 yılında Windows yerine Linux kullanmalısın?",
+      "excerpt": "Windowsunuzu illegal yollardan aktifleştirmekten sıkılmadınız mı?",
+      "imageUrl": "https://miro.medium.com/v2/resize:fit:1278/format:webp/1*fm2Y1noSdJ-j1HUIyFKpgA.png",
+      "mediumUrl": "https://medium.com/@tyfnacici/neden-2022-y%C4%B1l%C4%B1nda-windows-yerine-linux-kullanmal%C4%B1s%C4%B1n-d8772d35f5f"
+    },
+    {
+      "title": "Biyometrik Veriler Ve Biyometrik Verilerin Güvenliği",
+      "excerpt": "Biyometrik verilerin önemi",
+      "imageUrl": "https://miro.medium.com/v2/resize:fit:1400/format:webp/1*TDIZPajkbF8Zcy_pYv2M2w.png",
+      "mediumUrl": "https://medium.com/@tyfnacici/biyometrik-veriler-ve-biyometrik-verilerin-g%C3%BCvenli%C4%9Fi-92b3b7f1f01b"
+    }
+  ]
+}
