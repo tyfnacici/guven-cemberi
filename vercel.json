@@ -1,5 +1,0 @@
-{
-  "outputDirectory": "guven-cemberi-web",
-  "buildCommand": "cd guven-cemberi-web && npm run build",
-  "installCommand": "cd guven-cemberi-web && npm install"
-}
