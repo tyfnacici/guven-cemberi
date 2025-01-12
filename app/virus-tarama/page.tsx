@@ -1,4 +1,4 @@
-import UploadFile from "@/guven-cemberi-web/components/UploadFile";
+import UploadFile from "@/components/UploadFile";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {

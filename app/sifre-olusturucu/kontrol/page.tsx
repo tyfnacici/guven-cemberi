@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import PasswordStrengthIndicator from "@/guven-cemberi-web/components/PasswordStrengthIndicator";
+import PasswordStrengthIndicator from "@/components/PasswordStrengthIndicator";
 
 const Home: NextPage = () => {
   return (

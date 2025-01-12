@@ -1,5 +1,5 @@
 import articles from "../data/articles.json";
-import Article from "@/guven-cemberi-web/components/Article";
+import Article from "@/components/Article";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {

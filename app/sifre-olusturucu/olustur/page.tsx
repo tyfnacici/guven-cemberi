@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import AdvancedPasswordGenerator from "@/guven-cemberi-web/components/AdvancedPasswordGenerator";
+import AdvancedPasswordGenerator from "@/components/AdvancedPasswordGenerator";
 
 const Home: NextPage = () => {
   return (

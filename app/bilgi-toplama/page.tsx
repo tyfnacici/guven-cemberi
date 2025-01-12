@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import Result from "@/guven-cemberi-web/components/Result";
+import Result from "@/components/Result";
 import { useState, FormEvent } from "react";
 
 interface SearchResult {
