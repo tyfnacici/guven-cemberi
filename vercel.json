@@ -1,6 +1,5 @@
 {
   "outputDirectory": "guven-cemberi-web",
   "buildCommand": "cd guven-cemberi-web && npm run build",
-  "installCommand": "cd guven-cemberi-web && npm install",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./guven-cemberi-web/"
+  "installCommand": "cd guven-cemberi-web && npm install"
 }
