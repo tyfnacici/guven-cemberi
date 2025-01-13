@@ -1,12 +1,16 @@
 # Güven Çemberi (Circle of Trust)
 
-# Proje Videosu https://www.youtube.com/watch?v=7OTL2Mjah1k
+- [**Proje Videosu**](https://www.youtube.com/watch?v=7OTL2Mjah1k)
+- [**Proje Sunumu**](https://docs.google.com/presentation/d/1tqpqM84IdU64_DmL8nrL2Jv9RdvbyPCxsMey9rD03ho/edit?usp=sharing)
+- [**Proje Tezi**](https://docs.google.com/document/d/1effYaKRQ1Agthgu47bGZzezxNtj29p3XkNpVq1MqeHo/edit?usp=sharing)
+- [**Proje Kodları**](https://github.com/tyfnacici/guven-cemberi)
 
-# Proje Sunumu https://docs.google.com/presentation/d/1tqpqM84IdU64_DmL8nrL2Jv9RdvbyPCxsMey9rD03ho/edit?usp=sharing
+## Kullanılan Teknolojiler
 
-# Proje Tezi https://docs.google.com/document/d/1effYaKRQ1Agthgu47bGZzezxNtj29p3XkNpVq1MqeHo/edit?usp=sharing
-
-# Proje Kodları https://github.com/tyfnacici/guven-cemberi
+- **Frontend**: Next.js, Tailwind CSS, React Native
+- **Backend**: Dockerde çalışan Flask Backend
+- **Kütüphaneler**: React Native WebView, Expo, crypto-js, papaparse, eslint
+- **Yazılım Dilleri**: JavaScript, TypeScript, Python
 
 ## Proje Tanımı
 
@@ -53,7 +57,7 @@
   Proje, Docker konteynerları içerisinde Linux işletim sistemi üzerinde çalışacaktır. Bu, uygulamanın taşınabilirliğini ve ölçeklenebilirliğini artıracaktır. Tüm gerekli araçlar ve servisler tek bir Docker konteynerı içerisinde barındırılacak, böylece dağıtık bir mimari yerine monolitik bir yapı tercih edilecektir.
 
 - Programlama Dili ve Framework:
-  Backend için Node.js kullanılacak, bu da JavaScript tabanlı bir sunucu ortamı sağlayacaktır. TypeScript, tip güvenliği ve gelişmiş IDE desteği için tercih edilecektir. Frontend geliştirmesi için Next.js framework'ü kullanılacak, bu da React tabanlı, server-side rendering ve statik site oluşturma özelliklerini beraberinde getirecektir. CSS framework'ü olarak Tailwind CSS kullanılarak hızlı ve özelleştirilebilir bir tasarım süreci sağlanacaktır.
+  Backend için Flask kullanılacak, bu da Python tabanlı bir sunucu ortamı sağlayacaktır. TypeScript, tip güvenliği ve gelişmiş IDE desteği için tercih edilecektir. Frontend geliştirmesi için Next.js framework'ü kullanılacak, bu da React tabanlı, server-side rendering ve statik site oluşturma özelliklerini beraberinde getirecektir. CSS framework'ü olarak Tailwind CSS kullanılarak hızlı ve özelleştirilebilir bir tasarım süreci sağlanacaktır.
 
 - Veri Tabanı Mimarisi ve Teknolojisi:
   Projede kalıcı bir veritabanı kullanılmayacaktır. Bunun yerine, kullanıcı verileri session olarak tutulacak ve kriptografik algoritmalar kullanılarak hashlenecektir. Bu yaklaşım, kullanıcı gizliliğini artıracak ve veri sızıntısı riskini minimize edecektir.
@@ -67,4 +71,4 @@
 - Siber Güvenlik, Şifre Önerme ve Saklama Teknikleri:
   Şifre önerme işlemi için güçlü kriptografik rastgele sayı üreticileri kullanılacaktır. Oluşturulan şifreler, session içerisinde AES-256 gibi güçlü bir şifreleme algoritması kullanılarak saklanacaktır. Kullanıcılar, oluşturdukları şifreleri .csv formatında dışa aktarabilecek, böylece diğer şifre yöneticileri ile entegrasyon sağlanabilecektir.
 
-  Yazılım mimarisi olarak, RESTful API'ler kullanılarak web uygulaması ve tarayıcı eklentisi arasında veri alışverişi sağlanacaktır. Node.js ile yazılacak API'ler, Docker içerisindeki Linux araçlarına post request göndererek işlemleri gerçekleştirecek ve sonuçları döndürecektir. Gerekli diğer veriler, harici API'ler aracılığıyla projeye çekilecektir.
+  Yazılım mimarisi olarak, RESTful API'ler kullanılarak web uygulaması ve tarayıcı eklentisi arasında veri alışverişi sağlanacaktır. Flask ile yazılacak API'ler, Docker içerisindeki Linux araçlarına post request göndererek işlemleri gerçekleştirecek ve sonuçları döndürecektir. Gerekli diğer veriler, harici API'ler aracılığıyla projeye çekilecektir.
